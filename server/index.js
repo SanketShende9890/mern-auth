@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
+import userRouter from './routes/user.route.js';
 dotenv.config();    
 
 
@@ -13,9 +14,8 @@ mongoose.connect(process.env.MONGO_URI).then(()=>{
     console.log("Connected to database");
 }).catch(err=>console.log(err))
 
-app.get('/', (req, res)=>{
-    res.send('Server is running!!');
-})
+app.use("/", userRouter)
+
 app.listen(PORT, (req, res)=>{
     console.log(`Server is running on port: ${PORT}`);
 })
