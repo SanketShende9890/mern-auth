@@ -18,6 +18,19 @@ mongoose.connect("mongodb+srv://sanketshende18:admin@cluster0.rw80cbl.mongodb.ne
 app.use("/", userRoute);
 app.use("/api/auth", authRoute);
 
+
+// error middleware
+app.use((err, req, res, next)=>{
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    return res.status(statusCode).json({
+        success: false,
+        error: message,
+        statusCode
+    })
+
+})
+
 app.listen(PORT, (req, res)=>{
     console.log(`Server is running on port: ${PORT}`);
 })
